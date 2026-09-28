@@ -1,0 +1,792 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Faces do Abismo — Guia de Identidade de Combate</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&family=Crimson+Text:ital,wght@0,400;0,600;1,400&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0d0b08; --bg2:#14110c; --bg3:#1c1812; --panel:#181410;
+  --line:#3a3122; --gold:#d4a94e; --gold2:#f0c96a; --gold-dim:#8a6d35;
+  --amber:#e8b04b; --text:#e8e0cf; --muted:#a89e87;
+  --red:#b0452e; --green:#7a9a5c; --radius:10px;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  background:var(--bg); color:var(--text);
+  font-family:'Crimson Text', Georgia, serif; font-size:17px; line-height:1.65;
+  background-image:
+    radial-gradient(ellipse 80% 50% at 50% -10%, rgba(212,169,78,.08), transparent),
+    radial-gradient(ellipse 60% 40% at 50% 110%, rgba(176,69,46,.05), transparent);
+}
+h1,h2,h3,h4{font-family:'Cinzel', serif; letter-spacing:.04em}
+a{color:var(--gold2); text-decoration:none}
+a:hover{text-decoration:underline}
+.layout{display:flex; min-height:100vh}
+.sidebar{
+  width:280px; flex-shrink:0;
+  background:linear-gradient(180deg, var(--bg2), var(--bg));
+  border-right:1px solid var(--line);
+  padding:2rem 1.2rem; position:sticky; top:0; height:100vh; overflow-y:auto;
+}
+.sidebar::-webkit-scrollbar{width:6px}
+.sidebar::-webkit-scrollbar-thumb{background:var(--gold-dim); border-radius:3px}
+.brand{text-align:center; margin-bottom:2rem; padding-bottom:1.5rem; border-bottom:1px solid var(--line)}
+.brand .sigil{
+  width:64px;height:64px;margin:0 auto 1rem;border-radius:50%;
+  background:radial-gradient(circle at 50% 50%, var(--gold2) 0%, var(--gold) 35%, transparent 36%),
+             conic-gradient(from 0deg, #e0566b, #e8b04b, #7a9a5c, #5c8a9a, #8a5c9a, #e0566b);
+  box-shadow:0 0 24px rgba(212,169,78,.35);
+}
+.brand h1{font-size:1.05rem; color:var(--gold2); text-transform:uppercase; letter-spacing:.15em}
+.brand p{font-size:.8rem; color:var(--muted); font-style:italic; margin-top:.3rem}
+.nav-title{font-family:'Cinzel',serif; font-size:.7rem; color:var(--gold-dim); text-transform:uppercase; letter-spacing:.2em; margin:1.4rem 0 .5rem}
+.nav a{
+  display:block; padding:.42rem .7rem; margin:.12rem 0;
+  color:var(--muted); font-size:.92rem; border-left:2px solid transparent;
+  border-radius:0 6px 6px 0; transition:all .18s;
+}
+.nav a:hover{color:var(--gold2); background:rgba(212,169,78,.07); text-decoration:none; border-left-color:var(--gold-dim)}
+.nav a.mestre-link{color:var(--red)}
+.nav a.mestre-link:hover{color:#e07a5c; background:rgba(176,69,46,.08)}
+.main{flex:1; padding:3rem 3.5rem; max-width:980px}
+.hero{
+  text-align:center; padding:3rem 1rem 2.5rem; margin-bottom:3rem;
+  border-bottom:1px solid var(--line);
+  background:radial-gradient(ellipse 60% 80% at 50% 0%, rgba(212,169,78,.07), transparent);
+}
+.hero h1{font-size:2.4rem; font-weight:900;
+  background:linear-gradient(180deg, #f5d78a, #d4a94e 60%, #9a7a3a);
+  -webkit-background-clip:text; background-clip:text; -webkit-text-fill-color:transparent;
+}
+.hero .sub{font-family:'Cinzel',serif; font-size:.85rem; color:var(--muted); letter-spacing:.3em; text-transform:uppercase; margin-top:.6rem}
+.hero .tagline{font-style:italic; color:var(--muted); margin-top:1.2rem; max-width:560px; margin-left:auto; margin-right:auto}
+section{margin-bottom:3.5rem; scroll-margin-top:2rem}
+.section-head{display:flex; align-items:baseline; gap:1rem; margin-bottom:1.6rem; padding-bottom:.7rem; border-bottom:1px solid var(--line)}
+.section-head .num{font-family:'Cinzel',serif; font-size:.8rem; color:var(--gold-dim); letter-spacing:.2em}
+.section-head h2{font-size:1.6rem; color:var(--gold2)}
+.section-head .rule{flex:1; height:1px; background:linear-gradient(90deg, var(--line), transparent)}
+.howto{display:grid; grid-template-columns:repeat(auto-fit,minmax(210px,1fr)); gap:1rem}
+.howto .card{background:var(--panel); border:1px solid var(--line); border-radius:var(--radius); padding:1.1rem 1.2rem}
+.howto .card .n{font-family:'JetBrains Mono',monospace; color:var(--gold); font-size:.8rem}
+.howto .card h4{color:var(--gold2); font-size:.95rem; margin:.3rem 0 .4rem}
+.howto .card p{font-size:.9rem; color:var(--muted)}
+.class-card{
+  background:linear-gradient(160deg, var(--bg3), var(--panel));
+  border:1px solid var(--line); border-radius:var(--radius);
+  margin-bottom:1.6rem; overflow:hidden; box-shadow:0 4px 18px rgba(0,0,0,.35);
+}
+.class-card > header{
+  padding:1.1rem 1.5rem; cursor:pointer; user-select:none;
+  display:flex; align-items:center; gap:1rem;
+  background:linear-gradient(90deg, rgba(212,169,78,.08), transparent 60%);
+  border-bottom:1px solid var(--line); transition:background .2s;
+}
+.class-card > header:hover{background:linear-gradient(90deg, rgba(212,169,78,.14), transparent 60%)}
+.class-card .glyph{
+  width:44px;height:44px;flex-shrink:0;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  font-family:'Cinzel',serif; font-weight:700; font-size:1rem; color:var(--bg);
+  background:radial-gradient(circle at 35% 30%, var(--gold2), var(--gold-dim));
+  box-shadow:0 0 14px rgba(212,169,78,.3);
+}
+.class-card h3{font-size:1.25rem; color:var(--gold2)}
+.class-card .question{font-style:italic; color:var(--amber); font-size:.95rem; margin-top:.15rem}
+.class-card .chev{margin-left:auto; color:var(--gold-dim); font-size:1.2rem; transition:transform .3s; font-family:'JetBrains Mono',monospace}
+.class-card.open .chev{transform:rotate(90deg)}
+.class-body{display:none; padding:1.4rem 1.6rem 1.6rem}
+.class-card.open .class-body{display:block}
+.block-label{
+  font-family:'Cinzel',serif; font-size:.7rem; letter-spacing:.22em; text-transform:uppercase;
+  color:var(--gold); margin:1.3rem 0 .5rem; display:flex; align-items:center; gap:.6rem;
+}
+.block-label::after{content:''; flex:1; height:1px; background:var(--line)}
+.block-label:first-child{margin-top:0}
+.class-body p{color:var(--text)}
+.class-body p + p{margin-top:.5rem}
+.class-body em{color:var(--amber)}
+table{width:100%; border-collapse:collapse; margin:.6rem 0; font-size:.92rem}
+th{
+  font-family:'Cinzel',serif; font-size:.72rem; letter-spacing:.12em; text-transform:uppercase;
+  color:var(--gold); text-align:left; padding:.5rem .7rem; border-bottom:1px solid var(--gold-dim);
+}
+td{padding:.45rem .7rem; border-bottom:1px solid rgba(58,49,34,.6); color:var(--text); vertical-align:top}
+tr:last-child td{border-bottom:none}
+td:first-child{color:var(--gold2)}
+tbody tr:hover td{background:rgba(212,169,78,.04)}
+.economy{display:flex; flex-wrap:wrap; gap:.5rem; margin:.5rem 0}
+.chip{
+  font-family:'JetBrains Mono',monospace; font-size:.75rem;
+  background:rgba(212,169,78,.1); border:1px solid var(--gold-dim);
+  color:var(--gold2); padding:.28rem .7rem; border-radius:20px;
+}
+.chip.red{background:rgba(176,69,46,.12); border-color:var(--red); color:#e8a08a}
+.chip.green{background:rgba(122,154,92,.12); border-color:var(--green); color:#b8d49a}
+.faq{margin-top:.4rem}
+.faq details{background:rgba(0,0,0,.25); border:1px solid var(--line); border-radius:8px; margin:.45rem 0; overflow:hidden}
+.faq summary{
+  cursor:pointer; padding:.65rem .9rem; font-weight:600; color:var(--gold2);
+  font-size:.95rem; list-style:none; display:flex; align-items:center; gap:.5rem;
+}
+.faq summary::before{content:'❧'; color:var(--gold-dim); font-size:.8rem}
+.faq summary::-webkit-details-marker{display:none}
+.faq details[open] summary{border-bottom:1px solid var(--line); background:rgba(212,169,78,.05)}
+.faq .ans{padding:.7rem .9rem .85rem; color:var(--muted); font-size:.93rem}
+.faq .ans strong{color:var(--text)}
+.gm-note{
+  margin-top:1.2rem; padding:.9rem 1.1rem; border-radius:8px;
+  background:linear-gradient(90deg, rgba(176,69,46,.1), rgba(176,69,46,.03));
+  border:1px solid rgba(176,69,46,.35); border-left:3px solid var(--red);
+  font-size:.93rem; color:var(--muted);
+}
+.gm-note strong{color:#e8a08a; font-family:'Cinzel',serif; font-size:.75rem; letter-spacing:.15em; text-transform:uppercase; display:block; margin-bottom:.3rem}
+#mestre .section-head h2{color:#e07a5c}
+.gm-block{background:var(--panel); border:1px solid var(--line); border-radius:var(--radius); padding:1.3rem 1.5rem; margin-bottom:1.4rem}
+.gm-block h3{color:var(--gold2); font-size:1.1rem; margin-bottom:.7rem}
+.gm-block p, .gm-block li{color:var(--muted); font-size:.95rem}
+.gm-block ol, .gm-block ul{padding-left:1.4rem; margin:.4rem 0}
+.gm-block li{margin:.25rem 0}
+.gm-block li strong{color:var(--text)}
+.golden{
+  border-left:3px solid var(--gold); padding:.8rem 1rem; margin:.8rem 0;
+  background:rgba(212,169,78,.06); font-style:italic; color:var(--gold2);
+}
+.turno-economia{display:flex; flex-wrap:wrap; gap:.6rem; margin:.8rem 0}
+.turno-economia .slot{flex:1; min-width:150px; background:var(--bg3); border:1px solid var(--line); border-radius:8px; padding:.7rem .9rem}
+.turno-economia .slot b{display:block; font-family:'Cinzel',serif; font-size:.75rem; color:var(--gold); letter-spacing:.1em; text-transform:uppercase; margin-bottom:.25rem}
+.turno-economia .slot span{font-size:.85rem; color:var(--muted)}
+footer{margin-top:4rem; padding-top:2rem; border-top:1px solid var(--line); text-align:center; color:var(--muted); font-size:.85rem; font-style:italic}
+footer .sigil-line{font-family:'Cinzel',serif; color:var(--gold-dim); letter-spacing:.3em; font-size:.7rem; text-transform:uppercase; margin-bottom:.6rem}
+.menu-toggle{display:none}
+@media(max-width:900px){
+  .layout{flex-direction:column}
+  .sidebar{width:100%; height:auto; position:static; padding:1rem; border-right:none; border-bottom:1px solid var(--line)}
+  .brand{margin-bottom:.8rem; padding-bottom:.8rem}
+  .brand .sigil{width:44px;height:44px;margin-bottom:.5rem}
+  .nav{display:none}
+  .sidebar.open .nav{display:block}
+  .menu-toggle{
+    display:block; width:100%; padding:.6rem; margin-top:.5rem;
+    background:var(--bg3); border:1px solid var(--line); border-radius:8px;
+    color:var(--gold2); font-family:'Cinzel',serif; cursor:pointer;
+  }
+  .main{padding:1.5rem 1.2rem}
+  .hero h1{font-size:1.7rem}
+}
+</style>
+</head>
+<body>
+<div class="layout">
+  <aside class="sidebar" id="sidebar">
+    <div class="brand">
+      <div class="sigil"></div>
+      <h1>Faces do Abismo</h1>
+      <p>Guia de Identidade de Combate</p>
+    </div>
+    <button class="menu-toggle" onclick="document.getElementById('sidebar').classList.toggle('open')">☰ Índice</button>
+    <nav class="nav">
+      <div class="nav-title">Introdução</div>
+      <a href="#como-usar">Como usar este guia</a>
+      <div class="nav-title">As Doze Classes</div>
+      <a href="#guerreiro">Guerreiro · Posturas</a>
+      <a href="#berserker">Berserker · Fúria</a>
+      <a href="#atirador">Atirador · Preparações</a>
+      <a href="#ladino">Ladino · Oportunidades</a>
+      <a href="#arcanista">Arcanista · Moldagem</a>
+      <a href="#guardiao">Guardião · Juramentos</a>
+      <a href="#druida">Druida · Formas</a>
+      <a href="#xama">Xamã · Espíritos</a>
+      <a href="#bardo">Bardo · Ritmo</a>
+      <a href="#monge">Monge · Fluxo</a>
+      <a href="#artifice">Artífice · Preparos</a>
+      <a href="#conjurador">Conjurador · Manifestação</a>
+      <div class="nav-title">Referência</div>
+      <a href="#mestre" class="mestre-link">⚔ Para o Mestre</a>
+    </nav>
+  </aside>
+
+  <main class="main">
+    <div class="hero">
+      <h1>Identidade de Combate</h1>
+      <div class="sub">Faces do Abismo · Livro Básico</div>
+      <p class="tagline">"Cada classe não é uma lista de números — é uma pergunta que o mundo faz a cada rodada, e a maneira como você responde é a sua identidade na mesa."</p>
+    </div>
+
+    <section id="como-usar">
+      <div class="section-head"><span class="num">§</span><h2>Como usar este guia</h2><span class="rule"></span></div>
+      <p>Cada classe em Faces do Abismo possui um <strong>Recurso Próprio</strong>: uma mecânica que muda <em>como</em> ela luta, não apenas <em>quanto</em> dano causa. Este guia explica, para cada uma:</p>
+      <div class="howto" style="margin-top:1rem">
+        <div class="card"><div class="n">01</div><h4>A decisão central</h4><p>A pergunta que o jogador responde a cada turno de combate.</p></div>
+        <div class="card"><div class="n">02</div><h4>Como o recurso se move</h4><p>Ganho, gasto e recuperação — o ciclo de vida da mecânica.</p></div>
+        <div class="card"><div class="n">03</div><h4>Economia do turno</h4><p>Qual ação cada efeito consome na prática.</p></div>
+        <div class="card"><div class="n">04</div><h4>Dúvidas frequentes</h4><p>Respostas rápidas para as perguntas que mais aparecem na mesa.</p></div>
+        <div class="card"><div class="n">05</div><h4>Para o mestre</h4><p>Como fazer a classe brilhar — e como desafiá-la.</p></div>
+      </div>
+      <p style="margin-top:1rem; color:var(--muted); font-style:italic">Clique no cabeçalho de cada classe para expandir ou recolher.</p>
+    </section>
+
+    <section>
+      <div class="section-head"><span class="num">I</span><h2>As Doze Classes</h2><span class="rule"></span></div>
+
+      <article class="class-card" data-class id="guerreiro">
+        <header onclick="toggleCard(this)">
+          <div class="glyph">G</div>
+          <div><h3>Guerreiro</h3><div class="question">"Qual Postura me resolve agora?"</div></div>
+          <span class="chev">›</span>
+        </header>
+        <div class="class-body">
+          <div class="block-label">Como funciona</div>
+          <p>O Guerreiro está <strong>sempre</strong> em uma de três Posturas, escolhida no início do combate:</p>
+          <table>
+            <thead><tr><th>Postura</th><th>Benefício</th><th>Custo</th></tr></thead>
+            <tbody>
+              <tr><td>Ofensiva</td><td>+1 dano em ataques com arma</td><td>−1 Defesa</td></tr>
+              <tr><td>Defensiva</td><td>+2 Defesa</td><td>−1 dano</td></tr>
+              <tr><td>Tática</td><td>+1 em manobras e reposicionamento reativo (1 passo de 1m como Reação, sem provocar AOO)</td><td>sem bônus direto</td></tr>
+            </tbody>
+          </table>
+          <p><strong>Trocar de Postura:</strong> custa 1 <strong>Ação Bônus</strong>. Não há limite de trocas por combate — o limite é a economia do turno (uma Ação Bônus por rodada). A Postura alimenta as habilidades de classe: Golpe de Abertura só causa +2 dano em Ofensiva; Muralha de Aço exige Defensiva.</p>
+          <div class="block-label">Economia do turno</div>
+          <div class="economy">
+            <span class="chip">Início do combate: escolha grátis</span>
+            <span class="chip">Trocar: Ação Bônus</span>
+            <span class="chip">Sem limite de trocas</span>
+          </div>
+          <div class="block-label">Dúvidas frequentes</div>
+          <div class="faq">
+            <details><summary>Posso trocar de Postura e atacar no mesmo turno?</summary><div class="ans"><strong>Sim.</strong> Movimento → Ação Principal (ataque) → Ação Bônus (troca). A nova Postura vale imediatamente, inclusive para Reações até o seu próximo turno.</div></details>
+            <details><summary>A penalidade da Postura é permanente?</summary><div class="ans"><strong>Não.</strong> Vale enquanto a Postura estiver ativa. Trocou, acabou.</div></details>
+            <details><summary>Postura afeta habilidade de Mana/Lanto?</summary><div class="ans">Posturas falam de "ataques com arma" e Defesa. Habilidades seguem o que está escrito nelas.</div></details>
+          </div>
+          <div class="gm-note"><strong>Para o mestre</strong>O Guerreiro brilha quando o inimigo muda de comportamento no meio da luta — isso obriga troca de Postura. Evite combates onde um alvo parado recebe dano por 5 rodadas; isso anula a identidade dele. Coloque inimigos com fases (agressivo → defensivo) e situações táticas: proteger um civil, segurar um corredor.</div>
+        </div>
+      </article>
+
+      <article class="class-card" data-class id="berserker">
+        <header onclick="toggleCard(this)">
+          <div class="glyph">B</div>
+          <div><h3>Berserker</h3><div class="question">"Estou perto de um pico de Fúria útil — acelero ou seguro?"</div></div>
+          <span class="chev">›</span>
+        </header>
+        <div class="class-body">
+          <div class="block-label">Como funciona</div>
+          <p>A Fúria vai de <strong>0 a 5</strong>, começando em 0:</p>
+          <table>
+            <thead><tr><th>Fúria</th><th>Efeito</th></tr></thead>
+            <tbody>
+              <tr><td>0</td><td>nenhum</td></tr>
+              <tr><td>1</td><td>nenhum bônus (mas já pode gastar)</td></tr>
+              <tr><td>2</td><td>+1 dano corpo a corpo</td></tr>
+              <tr><td>3</td><td>+1 dano e +1 em Atletismo</td></tr>
+              <tr><td>4</td><td>+2 dano e +1 Resistência</td></tr>
+              <tr><td>5</td><td>+2 dano, +1 Resistência e acesso a técnicas de Fúria Máxima</td></tr>
+            </tbody>
+          </table>
+          <p><strong>Ganhar +1 quando:</strong> sofrer dano de inimigo · reduzir inimigo a 0 PV · sofrer Condição causada por inimigo · iniciar o turno com menos de 50% dos PV. <strong>Máximo de 2 Fúrias por rodada</strong> por esses gatilhos.</p>
+          <p><strong>Perder Fúria:</strong> ao final de uma cena de combate, volta a 0. Fora de combate, reduz 1 por minuto de descanso.</p>
+          <p><strong>Gastar em técnicas:</strong> Investida Brutal (2), Resistência Selvagem (2), Romper Limites (3) e a <strong>Êxtase da Batalha</strong> (5): por 3 rodadas, +2 dano, +2 Defesa, +2m deslocamento — mas sofre +2 no resultado dos testes e, ao terminar, 2 Cansanço. A Fúria volta a 0.</p>
+          <div class="block-label">Economia do turno</div>
+          <div class="economy">
+            <span class="chip">Ganho: reativo (máx. 2/rodada)</span>
+            <span class="chip">Bônus passivo: grátis pelo nível</span>
+            <span class="chip red">Êxtase: 5 Fúria + 2 Cansanço depois</span>
+          </div>
+          <div class="block-label">Dúvidas frequentes</div>
+          <div class="faq">
+            <details><summary>Perder PV de propósito para ganhar Fúria é válido?</summary><div class="ans"><strong>Mecanicamente, sim</strong> — mas o gatilho é sofrer dano de inimigo, e o máximo é 2 Fúrias por rodada. O próprio risco é o preço.</div></details>
+            <details><summary>Êxtase da Batalha: os bônus somam com o nível 5?</summary><div class="ans">O texto da Êxtase lista seus próprios bônus "durante 3 rodadas". Aplique como descrito; a Fúria zera ao terminar, então o bônus de nível some junto.</div></details>
+            <details><summary>Se eu gastar Fúria numa técnica, caio de nível?</summary><div class="ans"><strong>Sim.</strong> Você gasta pontos do medidor — o bônus passivo cai junto.</div></details>
+          </div>
+          <div class="gm-note"><strong>Para o mestre</strong>O Berserker precisa de <strong>pressão contínua</strong>: inimigos que recuam e atacam à distância o castigam (ele precisa sofrer dano para acelerar). Mas cuidado com o erro clássico de "proteger demais" — deixe a Fúria 5 acontecer. O custo (2 Cansanço, +2 nos testes) já é o equilíbrio embutido. Monstros inteligentes devem fugir de um Berserker em Êxtase — isso é vitória narrativa, não falha.</div>
+        </div>
+      </article>
+
+      <article class="class-card" data-class id="atirador">
+        <header onclick="toggleCard(this)">
+          <div class="glyph">A</div>
+          <div><h3>Atirador</h3><div class="question">"O que o inimigo vai fazer — e como eu disparo nele no meio disso?"</div></div>
+          <span class="chev">›</span>
+        </header>
+        <div class="class-body">
+          <div class="block-label">Como funciona</div>
+          <p>O Atirador mantém até <strong>2 Preparações</strong> simultâneas. Montar uma exige <strong>Ação Bônus</strong> e tem três partes:</p>
+          <ol style="padding-left:1.4rem; margin:.4rem 0">
+            <li><strong>Gatilho</strong> — o que precisa acontecer ("se o inimigo atravessar a porta")</li>
+            <li><strong>Resposta</strong> — o disparo</li>
+            <li><strong>Alvo</strong> — quem será atingido</li>
+          </ol>
+          <p>A Preparação fica ativa até o gatilho ocorrer (ou o combate acabar).</p>
+          <p><strong>Disparo Preparado:</strong> quando o gatilho ocorre, usa-se a <strong>Reação</strong>. O disparo recebe <strong>+2 no Ataque</strong> e <strong>+1d6 de dano</strong> se o alvo estiver em Abertura. Após disparar, a Preparação se consome.</p>
+          <div class="block-label">Preparações Especiais</div>
+          <p>Substituem uma Preparação normal e ocupam <strong>2 das 2 vagas</strong>:</p>
+          <table>
+            <thead><tr><th>Especial</th><th>Efeito</th></tr></thead>
+            <tbody>
+              <tr><td>Cobertura</td><td>+2 Defesa contra o primeiro ataque recebido antes do próximo turno</td></tr>
+              <tr><td>Mira</td><td>+2 no Ataque no próximo disparo</td></tr>
+              <tr><td>Interrupção</td><td>se o gatilho for uma criatura iniciando uma ação, o disparo tenta interrompê-la</td></tr>
+            </tbody>
+          </table>
+          <div class="block-label">Economia do turno</div>
+          <div class="economy">
+            <span class="chip">Montar: Ação Bônus</span>
+            <span class="chip red">Disparar: Reação (divide com Esquivar!)</span>
+            <span class="chip">Turno normal continua existindo</span>
+          </div>
+          <div class="block-label">Dúvidas frequentes</div>
+          <div class="faq">
+            <details><summary>Posso atacar normalmente e manter Preparações?</summary><div class="ans"><strong>Sim.</strong> A Preparação não ocupa sua Ação Principal — ela é uma ameaça suspensa.</div></details>
+            <details><summary>Se eu usar minha Reação para disparar, fico sem Esquivar?</summary><div class="ans"><strong>Exatamente.</strong> Essa é a tensão central da classe: atacar fora de turno ou se defender.</div></details>
+            <details><summary>Gatilhos vagos são permitidos?</summary><div class="ans"><strong>Não.</strong> Gatilho precisa ser observável e específico: uma porta, uma linha no chão, um alvo específico iniciando um feitiço.</div></details>
+          </div>
+          <div class="gm-note"><strong>Para o mestre</strong>Inimigos inteligentes devem aprender com o Atirador: depois do primeiro disparo preparado, testam gatilhos com lacaios, criam cobertura ou mudam de rota — forçando o jogador a reposicionar, que é o jogo da classe. Cenários com portas, pontes e corredores são o paraíso do Atirador. Lembre do teto de ±4: não empilhe +2 do disparo preparado com altura e flanqueamento além do limite.</div>
+        </div>
+      </article>
+
+      <article class="class-card" data-class id="ladino">
+        <header onclick="toggleCard(this)">
+          <div class="glyph">L</div>
+          <div><h3>Ladino</h3><div class="question">"Como transformo a ação dos outros em dano meu?"</div></div>
+          <span class="chev">›</span>
+        </header>
+        <div class="class-body">
+          <div class="block-label">Como funciona</div>
+          <p>Medidor de <strong>Oportunidades (0–3)</strong>, começa o combate em 0.</p>
+          <p><strong>Ganhar +1 quando:</strong></p>
+          <ul style="padding-left:1.4rem; margin:.3rem 0 .6rem">
+            <li>um inimigo a até 6m errar um ataque contra ele</li>
+            <li>atacar uma criatura Surpreendida</li>
+            <li>atacar uma criatura Caída</li>
+            <li>um inimigo sofrer Condição causada por aliado</li>
+            <li>entrar numa posição que o Mestre julgue Abertura</li>
+          </ul>
+          <div class="block-label">Gastar</div>
+          <table>
+            <thead><tr><th>Técnica</th><th>Custo</th><th>Efeito</th></tr></thead>
+            <tbody>
+              <tr><td>Golpe Oportunista</td><td>1</td><td>após acertar um ataque: +1d6 dano</td></tr>
+              <tr><td>Passo Fantasma</td><td>1</td><td>após qualquer ação: move até 3m sem provocar AOO</td></tr>
+              <tr><td>Desarme Rápido</td><td>1</td><td>após acertar corpo a corpo: teste de Agilidade oposto; sucesso = alvo solta um objeto</td></tr>
+              <tr><td>Interrupção</td><td>2</td><td><strong>Reação</strong>: criatura a até 3m inicia uma ação; Mergulho oposto à Defesa dela; se vencer, a ação é cancelada</td></tr>
+            </tbody>
+          </table>
+          <div class="block-label">Economia do turno</div>
+          <div class="economy">
+            <span class="chip">Ganho: reativo (depende dos outros)</span>
+            <span class="chip">Gasto: imediato, sem custo de ação</span>
+            <span class="chip red">Interrupção: consome Reação</span>
+          </div>
+          <div class="block-label">Dúvidas frequentes</div>
+          <div class="faq">
+            <details><summary>Ganho Oportunidade por atacar caído e gasto no mesmo ataque?</summary><div class="ans"><strong>Não.</strong> Você ganha por <em>atacar</em> a criatura caída; o Golpe Oportunista é "após acertar", então aplica-se a ataques seguintes. Sequência típica: aliado derruba o inimigo → você ataca (ganha 1) → no próximo ataque você já gasta.</div></details>
+            <details><summary>Interrupção cancela qualquer ação?</summary><div class="ans">O teste é Mergulho oposto (Agilidade + Reflexos vs. Defesa do alvo). Só funciona a até 3m e gasta Reação. Use contra ações caras: conjuração, Investida, Fuga de Agarrado.</div></details>
+          </div>
+          <div class="gm-note"><strong>Para o mestre</strong>O Ladino é um multiplicador de equipe: quanto mais aliados causando Condições e derrubando inimigos, mais Oportunidades ele tem. Inimigos descuidados que erram ataques contra ele às vezes alimentam o medidor. Inimigos inteligentes devem tratá-lo como prioridade após o primeiro Desarme. Cenas com plataformas, cordas e terreno perigoso alimentam o Passo Fantasma.</div>
+        </div>
+      </article>
+
+      <article class="class-card" data-class id="arcanista">
+        <header onclick="toggleCard(this)">
+          <div class="glyph">Ar</div>
+          <div><h3>Arcanista</h3><div class="question">"Qual parâmetro da minha habilidade eu torço agora?"</div></div>
+          <span class="chev">›</span>
+        </header>
+        <div class="class-body">
+          <div class="block-label">Como funciona</div>
+          <p><strong>2 Pontos de Moldagem por rodada</strong>, recuperados ao final de cada rodada. Gastar 1 ponto altera um parâmetro da habilidade em uso:</p>
+          <table>
+            <thead><tr><th>Parâmetro</th><th>Alteração</th></tr></thead>
+            <tbody>
+              <tr><td>Alcance</td><td>+4m</td></tr>
+              <tr><td>Área</td><td>+2m de raio</td></tr>
+              <tr><td>Duração</td><td>+1 rodada</td></tr>
+              <tr><td>Dano</td><td>+2</td></tr>
+              <tr><td>Cura</td><td>+2 PV</td></tr>
+              <tr><td>DV</td><td>−1 DV (o efeito fica mais difícil de resistir)</td></tr>
+              <tr><td>Forma</td><td>muda a manifestação física sem alterar o efeito</td></tr>
+            </tbody>
+          </table>
+          <p><strong>Moldagem Maior:</strong> gastar os 2 pontos de uma vez permite alterar <strong>dois parâmetros</strong> da mesma habilidade.</p>
+          <div class="block-label">Economia do turno</div>
+          <div class="economy">
+            <span class="chip">2 pontos por rodada</span>
+            <span class="chip">Recupera ao fim da rodada</span>
+            <span class="chip">Gasto no momento de usar (sem ação extra)</span>
+          </div>
+          <div class="block-label">Dúvidas frequentes</div>
+          <div class="faq">
+            <details><summary>Posso moldar a habilidade de outro personagem?</summary><div class="ans"><strong>Não.</strong> A Moldagem vale apenas para habilidades próprias.</div></details>
+            <details><summary>Moldar Dano +2: é por dado?</summary><div class="ans"><strong>Não.</strong> São +2 pontos fixos de dano, uma única vez.</div></details>
+            <details><summary>DV −1 entra no teto de modificadores?</summary><div class="ans"><strong>Não.</strong> A Moldagem é efeito de classe (não circunstancial), portanto não entra no teto de ±4 de bônus situacionais.</div></details>
+          </div>
+          <div class="gm-note"><strong>Para o mestre</strong>O Arcanista resolve problemas que a ficha não previu: a cura vira de área, o disparo de 6m vira de 18m, a barreira dura 3 rodadas em vez de 1. Prepare obstáculos que exijam essa criatividade (cobertura total, aliados espalhados, mecanismos à distância). Se pedir uma moldagem estranha ("área em forma de anel"), negocie: os parâmetros da tabela são fixos, mas a <em>Forma</em> é livre.</div>
+        </div>
+      </article>
+
+      <article class="class-card" data-class id="guardiao">
+        <header onclick="toggleCard(this)">
+          <div class="glyph">Gd</div>
+          <div><h3>Guardião</h3><div class="question">"Quem precisa de mim nesta rodada?"</div></div>
+          <span class="chev">›</span>
+        </header>
+        <div class="class-body">
+          <div class="block-label">Como funciona</div>
+          <p><strong>3 Pontos de Juramento por cena</strong>, recuperados ao final da cena.</p>
+          <table>
+            <thead><tr><th>Técnica</th><th>Custo</th><th>Quando</th><th>Efeito</th></tr></thead>
+            <tbody>
+              <tr><td>Interposição</td><td>1</td><td>Reação, alvo protegido a até 3m é atingido</td><td>move até ele e torna-se o alvo do ataque</td></tr>
+              <tr><td>Escudo do Juramento</td><td>1</td><td>Reação</td><td>reduz dano do alvo protegido em 1d8+2</td></tr>
+              <tr><td>Presença do Guardião</td><td>1</td><td>Ação</td><td>até seu próximo turno, alvos protegidos a até 3m recebem bônus defensivo</td></tr>
+              <tr><td>Última Linha</td><td>2</td><td>quando alvo protegido cairia a 0 PV</td><td>ele permanece com 1 PV; você sofre 1d12 de dano</td></tr>
+            </tbody>
+          </table>
+          <div class="block-label">Economia do turno</div>
+          <div class="economy">
+            <span class="chip">3 pontos por cena</span>
+            <span class="chip red">3 técnicas competem pela mesma Reação</span>
+            <span class="chip red">Última Linha: paga 1d12 de dano</span>
+          </div>
+          <div class="block-label">Dúvidas frequentes</div>
+          <div class="faq">
+            <details><summary>Posso proteger dois alvos ao mesmo tempo?</summary><div class="ans">A <strong>Presença do Guardião</strong> afeta todos os alvos protegidos no raio. Interposição e Escudo são por gatilho.</div></details>
+            <details><summary>Interposição provoca Ataque de Oportunidade?</summary><div class="ans">O texto não diz que provoca; como Reação de classe, trate como movimento especial que não provoca.</div></details>
+            <details><summary>O dano de Última Linha ignora minha RD?</summary><div class="ans">O texto diz "você sofre 1d12 dano". A leitura mais segura: RD de armadura aplica normalmente — confirme com seu mestre.</div></details>
+          </div>
+          <div class="gm-note"><strong>Para o mestre</strong>O Guardião é um imã de ataque: inimigos inteligentes que percebem que ele intercepta tudo devem ignorá-lo e ir atrás dos frágeis (derrubá-lo, envenená-lo, atacar à distância). Isso é o jogo funcionando. Crie momentos onde proteger custa caro — escolher entre dois aliados atingidos no mesmo turno é o ápice da classe. Quando os 3 pontos acabam, o Guardião continua sendo um combatente corpo a corpo decente; não sinta pena, deixe o poço secar.</div>
+        </div>
+      </article>
+
+      <article class="class-card" data-class id="druida">
+        <header onclick="toggleCard(this)">
+          <div class="glyph">D</div>
+          <div><h3>Druida</h3><div class="question">"Qual Forma resolve este problema?"</div></div>
+          <span class="chev">›</span>
+        </header>
+        <div class="class-body">
+          <div class="block-label">Como funciona</div>
+          <p>Conhece <strong>3 Formas</strong>. Assumir uma custa <strong>Ação Bônus</strong> e dura até ser encerrada voluntariamente, trocada, ou o fim da cena.</p>
+          <p><strong>Cota de transformação:</strong> 2 transformações gratuitas por cena. A partir da 3ª, cada uma custa <strong>2 Cansanço</strong>.</p>
+          <table>
+            <thead><tr><th>Forma</th><th>Benefícios</th><th>Limitação</th></tr></thead>
+            <tbody>
+              <tr><td>Predador</td><td>+2m deslocamento, +1d6 dano desarmado, +2 Furtividade</td><td>não pode usar armas pesadas</td></tr>
+              <tr><td>Guardião</td><td>+2 Defesa, +2 Resistência</td><td>−1m deslocamento</td></tr>
+              <tr><td>Rastreador</td><td>+2 Percepção, +2 Sobrevivência, sentidos aprimorados</td><td>não recebe bônus direto de dano</td></tr>
+            </tbody>
+          </table>
+          <div class="block-label">Economia do turno</div>
+          <div class="economy">
+            <span class="chip">Ativar/mudar: Ação Bônus</span>
+            <span class="chip">2 grátis por cena</span>
+            <span class="chip red">3ª em diante: 2 Cansanço cada</span>
+          </div>
+          <div class="block-label">Dúvidas frequentes</div>
+          <div class="faq">
+            <details><summary>Posso misturar Formas?</summary><div class="ans">Só via habilidade de classe futura (ex.: Forma Híbrida). Na base, uma Forma por vez.</div></details>
+            <details><summary>A Forma é interrompida por dano?</summary><div class="ans"><strong>Não.</strong> Ela termina se o Druida assumir outra Forma ou se a cena acabar. Dano não a interrompe por padrão.</div></details>
+          </div>
+          <div class="gm-note"><strong>Para o mestre</strong>O Druida é o canivete suíço: a Forma certa resolve a cena errada. O desafio é ambientação: floresta, caverna, neve, escuridão. Fora do ambiente natural, incentive o jogador a descrever Formas urbanas (Gato de Telhado, Forma de Enxame). Cansanço é o freio natural — viagens longas + muitas trocas esgotam o Druida, o que conversa com o capítulo de Sobrevivência.</div>
+        </div>
+      </article>
+
+      <article class="class-card" data-class id="xama">
+        <header onclick="toggleCard(this)">
+          <div class="glyph">X</div>
+          <div><h3>Xamã</h3><div class="question">"Este Espírito é o certo — ou gasto poder para trazer o que preciso?"</div></div>
+          <span class="chev">›</span>
+        </header>
+        <div class="class-body">
+          <div class="block-label">Como funciona</div>
+          <p>Possui <strong>3 Vínculos</strong> (Espíritos), mas apenas <strong>1 pode estar manifestado</strong>. Manifestar custa <strong>Ação</strong>. Trocar de Espírito: <strong>Ação Bônus + 1 Mana ou Lanto</strong>.</p>
+          <p><strong>Atributos do Espírito:</strong></p>
+          <ul style="padding-left:1.4rem; margin:.3rem 0 .6rem">
+            <li>PV = 6 + 2 × Espírito do Xamã</li>
+            <li>Defesa = 10 − Espírito do Xamã</li>
+            <li>Poder = força das habilidades</li>
+          </ul>
+          <p><strong>Canalização:</strong> uma vez por rodada, ao usar habilidade de classe, o Xamã escolhe manifestá-la a partir de si <em>ou</em> da posição do Espírito — o alcance passa a ser calculado de onde o Espírito está.</p>
+          <div class="block-label">Espíritos exemplares</div>
+          <table>
+            <thead><tr><th>Espírito</th><th>Efeito contínuo</th><th>Especial</th></tr></thead>
+            <tbody>
+              <tr><td>Escudo</td><td>aliados a até 3m recebem +1 Defesa</td><td>Interposição (Reação): recebe o ataque no lugar do aliado</td></tr>
+              <tr><td>Olho</td><td>+Percepção enquanto ativo</td><td>Revelação (Ação): alvo não recebe Invisibilidade/cobertura total</td></tr>
+              <tr><td>Raiz</td><td>—</td><td>Enraizar (Ação): teste oposto; falha = deslocamento do alvo vira 0m</td></tr>
+              <tr><td>Véu</td><td>aliados a até 3m recebem +2 Furtividade</td><td>Desaparecer (Reação): impõe +2 no ataque contra o alvo</td></tr>
+            </tbody>
+          </table>
+          <div class="block-label">Economia do turno</div>
+          <div class="economy">
+            <span class="chip">Manifestar: Ação Principal</span>
+            <span class="chip">Trocar: Ação Bônus + 1 Mana/Lanto</span>
+            <span class="chip">Canalização: 1× por rodada</span>
+          </div>
+          <div class="block-label">Dúvidas frequentes</div>
+          <div class="faq">
+            <details><summary>O Espírito tem turno próprio?</summary><div class="ans">Não há turno separado descrito — suas habilidades são acionadas pelo Xamã (como Ação ou Reação dele, conforme a técnica). Trate o Espírito como extensão posicional.</div></details>
+            <details><summary>E se o Espírito for destruído?</summary><div class="ans">Tem PV próprios; quando zera, o Vínculo é perdido até um Descanso (leitura recomendada — o texto não detalha; confirme com seu mestre). Trocar de Espírito antes disso é a defesa.</div></details>
+          </div>
+          <div class="gm-note"><strong>Para o mestre</strong>A canalização é a joia: o Xamã cura aliados sem estar perto, enraíza inimigos do outro lado da sala, revela o ladrão invisível na varanda. Inimigos inteligentes devem atacar o Espírito físico quando ele incomoda. Coloque a escolha sob pressão: "seu Espírito do Escudo segura a porta, mas o Olho revelaria o assassino no telhado".</div>
+        </div>
+      </article>
+
+      <article class="class-card" data-class id="bardo">
+        <header onclick="toggleCard(this)">
+          <div class="glyph">Ba</div>
+          <div><h3>Bardo</h3><div class="question">"Continuo acumulando ou gasto agora?"</div></div>
+          <span class="chev">›</span>
+        </header>
+        <div class="class-body">
+          <div class="block-label">Como funciona</div>
+          <p>Medidor de <strong>Ritmo (0–5)</strong>, começa o combate em 0.</p>
+          <p><strong>Ganhar +1 quando:</strong></p>
+          <ul style="padding-left:1.4rem; margin:.3rem 0 .6rem">
+            <li>um aliado a até 6m acerta um ataque após receber habilidade do Bardo</li>
+            <li>um aliado obtém Acerto Crítico</li>
+            <li>o Bardo aplica uma Condição a um inimigo</li>
+            <li>o Bardo usa habilidade que altera o posicionamento de um aliado</li>
+            <li>um aliado reduz inimigo a 0 PV</li>
+          </ul>
+          <p><strong>Máximo de 2 Ritmos por rodada.</strong></p>
+          <div class="block-label">Gastar</div>
+          <table>
+            <thead><tr><th>Técnica</th><th>Custo</th><th>Tipo</th><th>Efeito</th></tr></thead>
+            <tbody>
+              <tr><td>Nota de Coragem</td><td>1</td><td>Reação</td><td>aliado a até 6m adiciona −1d4 ao resultado de um teste</td></tr>
+              <tr><td>Compasso de Guerra</td><td>2</td><td>Reação</td><td>quando aliado acerta, ele move 2m sem provocar AOO</td></tr>
+              <tr><td>Solo</td><td>3</td><td>Ação</td><td>escolha até 2 aliados a até 6m (cada um só 1×/cena)</td></tr>
+              <tr><td>Clímax</td><td>5</td><td>Ação</td><td>até o próximo turno do Bardo, todos os aliados a até 6m recebem vantagem ofensiva; ao terminar, Ritmo zera</td></tr>
+            </tbody>
+          </table>
+          <div class="block-label">Economia do turno</div>
+          <div class="economy">
+            <span class="chip">Ganho: passivo e coletivo</span>
+            <span class="chip">Gasto: imediato (Reação ou Ação)</span>
+            <span class="chip red">Clímax: zera o medidor</span>
+          </div>
+          <div class="block-label">Dúvidas frequentes</div>
+          <div class="faq">
+            <details><summary>Posso gastar Ritmo no turno de outro jogador?</summary><div class="ans"><strong>Sim.</strong> Nota de Coragem e Compasso de Guerra são Reações — são o coração da classe.</div></details>
+            <details><summary>Clímax vale a pena vs. 5 Ritmos soltos?</summary><div class="ans">Clímax é uma virada de mesa; 5 pontos soltos são flexibilidade. Essa é exatamente a decisão que define um bom Bardo.</div></details>
+          </div>
+          <div class="gm-note"><strong>Para o mestre</strong>O Bardo mede a sinergia do grupo: se os jogadores jogam isolados, o Bardo morre de fome. Incentive chamadas de atenção ("quem está a até 6m?"). Inimigos devem calar o Bardo cedo — e o grupo deve protegê-lo. O Clímax é o momento de spotlight: narre em câmera lenta.</div>
+        </div>
+      </article>
+
+      <article class="class-card" data-class id="monge">
+        <header onclick="toggleCard(this)">
+          <div class="glyph">M</div>
+          <div><h3>Monge</h3><div class="question">"Qual ação vem agora para manter a cadeia?"</div></div>
+          <span class="chev">›</span>
+        </header>
+        <div class="class-body">
+          <div class="block-label">Como funciona</div>
+          <p>Medidor de <strong>Fluxo (0–5)</strong>, começa o combate em 0.</p>
+          <p><strong>Ganhar +1 quando realizar uma ação de categoria diferente da anterior.</strong> Categorias: Mover / Atacar / Defender / Controlar.</p>
+          <ul style="padding-left:1.4rem; margin:.3rem 0 .6rem">
+            <li>Mover → Atacar: <strong>+1</strong></li>
+            <li>Atacar → Atacar: <strong>+0</strong> (mesma categoria)</li>
+            <li>Mover → Atacar → Mover: <strong>+2</strong></li>
+          </ul>
+          <p><strong>Limites:</strong> máximo 3 Fluxos por rodada; máximo 5 armazenados.</p>
+          <div class="block-label">Gastar</div>
+          <table>
+            <thead><tr><th>Técnica</th><th>Custo</th><th>Efeito</th></tr></thead>
+            <tbody>
+              <tr><td>Passo Vazio</td><td>1</td><td>Reação: mova-se 3m, não provoca AOO</td></tr>
+              <tr><td>Punho Encadeado</td><td>2</td><td>após acertar ataque desarmado: ataque desarmado extra com −2 no Ataque</td></tr>
+              <tr><td>Queda do Cedro</td><td>2</td><td>após acertar: alvo testa Resistência vs. DV 10 + Agilidade; falha = Caído</td></tr>
+              <tr><td>Corpo Vazio</td><td>3</td><td>Reação: até o próximo turno, +2 Defesa e +2m deslocamento</td></tr>
+              <tr><td>Mil Movimentos</td><td>5</td><td>Ação: até 3 movimentos de 3m + 2 ataques, distribuídos como quiser</td></tr>
+            </tbody>
+          </table>
+          <p><strong>Quebrar o Fluxo:</strong> ficar imóvel voluntariamente por uma rodada inteira ou ficar Incapacitado → Fluxo zera.</p>
+          <div class="block-label">Economia do turno</div>
+          <div class="economy">
+            <span class="chip">Ganho: estrutura do próprio turno (grátis)</span>
+            <span class="chip">Máx. 3/rodada · máx. 5 armazenados</span>
+            <span class="chip">Mil Movimentos: payoff de 2+ rodadas</span>
+          </div>
+          <div class="block-label">Dúvidas frequentes</div>
+          <div class="faq">
+            <details><summary>Esquivar conta como "Defender"?</summary><div class="ans"><strong>Sim.</strong> Reações defensivas entram na categoria Defender — é a leitura mais fiel à filosofia da classe.</div></details>
+            <details><summary>Posso alternar Atacar/Defender com aliados no meio?</summary><div class="ans">O gatilho é a <em>sua</em> ação, na <em>sua</em> sequência de turno.</div></details>
+          </div>
+          <div class="gm-note"><strong>Para o mestre</strong>O Monge é coreografia: premie descrição variada e puna repetição (spam de ataque = zero Fluxo). Terreno com múltiplos níveis é o sonho dele (Passo Vazio atravessa a arena). Inimigos com Agarrar ou Imobilizar são o contra-jogo natural.</div>
+        </div>
+      </article>
+
+      <article class="class-card" data-class id="artifice">
+        <header onclick="toggleCard(this)">
+          <div class="glyph">At</div>
+          <div><h3>Artífice</h3><div class="question">"Como gasto meus 6 componentes?"</div></div>
+          <span class="chev">›</span>
+        </header>
+        <div class="class-body">
+          <div class="block-label">Como funciona</div>
+          <p>Possui <strong>6 Componentes</strong>, divididos em três categorias: Mecânico, Químico, Arcano. <strong>Recupera todos ao final da cena</strong>.</p>
+          <p><strong>Construir dispositivo (como Ação):</strong></p>
+          <table>
+            <thead><tr><th>Nível</th><th>Custo</th><th>Exemplos</th></tr></thead>
+            <tbody>
+              <tr><td>Básico</td><td>1 Componente</td><td>Bomba de Impacto (2d6), Cápsula de Fumaça, Dispositivo de Reparo (1d6+2), Âncora Mecânica</td></tr>
+              <tr><td>Avançado</td><td>2</td><td>Torreta (PV 8 / Def 12 / 1d8 por 3 rodadas), Armadilha de Contenção</td></tr>
+              <tr><td>Excepcional</td><td>3</td><td>Protótipo: efeito livre, 1 função + 1 limitação, aprovado pelo Mestre</td></tr>
+            </tbody>
+          </table>
+          <p><strong>Modificar</strong> (antes de usar, +1 Componente cada, máx. 2 modificações): Alcance +4m · Área +1m raio · Dano +1d4 · Duração +1 rodada · Controle (adiciona Condição simples).</p>
+          <p><strong>Improvisar</strong> (quando não tem o dispositivo certo): Ação Principal + 2 Componentes + 1 Cansanço, teste contra DV 12–18. Sucesso: funciona por 1 rodada ou 1 uso. Falha: componentes perdidos. O efeito nunca ultrapassa Potência = limite do Artífice − 2.</p>
+          <div class="block-label">Economia do turno</div>
+          <div class="economy">
+            <span class="chip">6 componentes por cena</span>
+            <span class="chip">Ativar: Ação</span>
+            <span class="chip">Decisão: variado vs. Protótipo</span>
+          </div>
+          <div class="block-label">Dúvidas frequentes</div>
+          <div class="faq">
+            <details><summary>Posso construir antes do combate?</summary><div class="ans">Os Componentes se recuperam ao final da cena — estocar não é a regra base. Com o Mestre, cenas de preparação pré-combate podem conceder 1–2 dispositivos prontos (decisão de mesa sensata).</div></details>
+            <details><summary>A Torreta ataca sozinha?</summary><div class="ans"><strong>Sim.</strong> 1 ataque por rodada (1d8) por 3 rodadas, enquanto durar.</div></details>
+          </div>
+          <div class="gm-note"><strong>Para o mestre</strong>O Artífice lê o cenário como um tabuleiro: ponte frágil + Bomba, corredor + Fumaça, teto + Âncora. Dê a ele cenários com elementos interativos e tempo de preparação (uma rodada de respirar antes da onda de inimigos vale ouro). O Improviso é a regra mais poderosa da classe — diga "sim, e..." com um DV justo.</div>
+        </div>
+      </article>
+
+      <article class="class-card" data-class id="conjurador">
+        <header onclick="toggleCard(this)">
+          <div class="glyph">C</div>
+          <div><h3>Conjurador</h3><div class="question">"Duas presenças ou concentro tudo em uma?"</div></div>
+          <span class="chev">›</span>
+        </header>
+        <div class="class-body">
+          <div class="block-label">Como funciona</div>
+          <p>O Conjurador constrói uma <strong>Manifestação</strong> única (entidade, armadura viva, fera espectral — aparência livre, coerente com a origem do poder):</p>
+          <table>
+            <thead><tr><th>Atributo</th><th>Valor</th></tr></thead>
+            <tbody>
+              <tr><td>PV</td><td>8 + 2 × atributo de Conjuração (Mana = Espírito; Lanto = Intelecto)</td></tr>
+              <tr><td>Defesa</td><td>10 − (atributo × 2)</td></tr>
+              <tr><td>Deslocamento</td><td>6m</td></tr>
+              <tr><td>Ataque</td><td>1d8 (tipo de dano conforme a natureza)</td></tr>
+            </tbody>
+          </table>
+          <p><strong>2 Características</strong> escolhidas: Brutal (+2 dano) · Ágil (+2 Defesa) · Vigilante (+2 Percepção) · Protetora (Interposição) · Distante (+4m alcance) · Resistente (+4 PV). <strong>1 Habilidade</strong> inicial (Golpe Devastador, Interposição, Puxão, Barreira, Salto).</p>
+          <p><strong>Turno:</strong> a Manifestação tem 1 Ação própria (Atacar, Defender, Mover, Auxiliar ou habilidade) + o Conjurador tem as ações dele. No início do turno do Conjurador, ele emite um <strong>comando</strong> (ação livre). Sem comando, a Manifestação só Defende ou se move para perto dele.</p>
+          <p><strong>Vínculo de Distância:</strong> máximo 12m. Além disso: +3 em todos os testes da Manifestação e sem habilidades. 3 rodadas fora do alcance = dissipação.</p>
+          <p><strong>Desgaste:</strong> cada habilidade especial causa 1 Desgaste. Aos 3 Desgastes = <strong>Instável</strong> (+2 Defesa e +2 Ataque — perigosa dos dois jeitos). Remove-se 1 Desgaste com Ação Principal + 2 Mana/Lanto.</p>
+          <p><strong>Sobrecarga:</strong> 1× por rodada, +2 Mana/Lanto para usar habilidade especial sem Desgaste; o Conjurador sofre 2 Cansanço.</p>
+          <p><strong>Destruída:</strong> a 0 PV, desaparece; o Conjurador sofre 2 Cansanço; não pode re-manifestar por 3 rodadas; depois, Ação Principal + 3 Mana/Lanto, retornando com metade dos PV.</p>
+          <div class="block-label">Economia do turno</div>
+          <div class="economy">
+            <span class="chip">Comando: ação livre</span>
+            <span class="chip">Habilidade: ação da Manifestação + Desgaste</span>
+            <span class="chip red">Sobrecarga: +2 Mana/Lanto e 2 Cansanço</span>
+          </div>
+          <div class="block-label">Dúvidas frequentes</div>
+          <div class="faq">
+            <details><summary>A Manifestação e eu podemos atacar o mesmo alvo?</summary><div class="ans"><strong>Sim.</strong> São duas presenças com ações separadas — é a assinatura da classe.</div></details>
+            <details><summary>A Manifestação tem Reação própria?</summary><div class="ans">1 por rodada, mas só para habilidades com a palavra "Reação" — não pode esquivar livremente.</div></details>
+            <details><summary>Posso dar comandos complexos?</summary><div class="ans">Comandos são uma frase ("proteja aquele aliado", "ataque aquele alvo"). Táticas elaboradas exigem que o Conjurador use a própria Ação para controlar finamente (decisão de mesa).</div></details>
+          </div>
+          <div class="gm-note"><strong>Para o mestre</strong>O Conjurador é dois corpos para gerenciar — mantenha o turno dele ágil (a Manifestação tem poucas opções de propósito). Inimigos devem atacar a entidade (ela é alvo legítimo e isso cria o drama do Desgaste). O Vínculo de 12m cria posicionamento interessante: separar o Conjurador da Manifestação é uma estratégia válida de inimigos inteligentes.</div>
+        </div>
+      </article>
+    </section>
+
+    <section id="mestre">
+      <div class="section-head"><span class="num">II</span><h2>Para o Mestre</h2><span class="rule"></span></div>
+
+      <div class="gm-block">
+        <h3>O loop universal de decisão</h3>
+        <p>Toda classe segue o mesmo ciclo:</p>
+        <div class="golden">Escolha → Risco → Regra → Consequência</div>
+        <p>A escolha narrativa vem primeiro; a mecânica serve a ela. Ao aplicar qualquer recurso de classe, pergunte: <em>"a descrição do jogador justifica esse uso?"</em> antes de consultar números.</p>
+      </div>
+
+      <div class="gm-block">
+        <h3>Recursos por duração (cola rápida)</h3>
+        <table>
+          <thead><tr><th>Duração</th><th>Classes</th><th>Implicação</th></tr></thead>
+          <tbody>
+            <tr><td>Por rodada</td><td>Guerreiro (Ação Bônus), Arcanista (2 pts), Berserker (máx 2 fúria), Bardo (máx 2 ritmo), Monge (máx 3 fluxo)</td><td>Decisão rápida, sem planejamento longo</td></tr>
+            <tr><td>Por cena</td><td>Berserker (zera no fim), Guardião (3 juramentos), Ladino, Bardo, Monge, Artífice (componentes), Conjurador (desgaste)</td><td>Administração de "orçamento" — o jogador deve sentir o poço secando</td></tr>
+            <tr><td>Por combate</td><td>Atirador (preparações persistem), Berserker (acúmulo)</td><td>Setup com payoff adiado</td></tr>
+          </tbody>
+        </table>
+        <p>Ao desenhar encontros, varie o comprimento: combates curtos favorecem recursos de cena; combates longos (boss em fases) favorecem acumuladores (Berserker, Monge, Bardo).</p>
+      </div>
+
+      <div class="gm-block">
+        <h3>Fazer cada classe brilhar (checklist de encontro)</h3>
+        <ul>
+          <li><strong>Guerreiro:</strong> inimigo que muda de comportamento ou posição tática obrigatória</li>
+          <li><strong>Berserker:</strong> pressão de dano constante; nada de inimigos que só fogem</li>
+          <li><strong>Atirador:</strong> gatilhos naturais (portas, pontes, corredores, linhas de visão)</li>
+          <li><strong>Ladino:</strong> aliados que causam Condições; inimigos descuidados que erram ataques</li>
+          <li><strong>Arcanista:</strong> problemas que exigem parâmetros quebrados (alcance, área, duração)</li>
+          <li><strong>Guardião:</strong> aliados frágeis expostos; escolhas de proteção impossíveis</li>
+          <li><strong>Druida:</strong> ambientes com terreno, clima e escuridão relevantes</li>
+          <li><strong>Xamã:</strong> espaço para posicionar o Espírito; alvos espalhados</li>
+          <li><strong>Bardo:</strong> grupo junto (raio de 6m); múltiplos aliados atacando</li>
+          <li><strong>Monge:</strong> terreno vertical/variedade de ações; nada de "ficar na porta e bater"</li>
+          <li><strong>Artífice:</strong> um turno de preparação; cenário com objetos interativos</li>
+          <li><strong>Conjurador:</strong> espaço de 12m+ de arena; inimigos que forçam dividir as duas presenças</li>
+        </ul>
+      </div>
+
+      <div class="gm-block">
+        <h3>As seis regras de ouro</h3>
+        <ol>
+          <li><strong>Não esconda a regra.</strong> Se um inimigo vai mudar de padrão, telegrafe ("o ogro recua e levanta o braço").</li>
+          <li><strong>Não mude a regra no meio.</strong> Recursos têm valores fixos nas tabelas — "não existe escolha de negociação" é filosofia do sistema.</li>
+          <li><strong>Não proteja demais.</strong> Deixe o Guardião ficar sem Juramento, o Berserker pagar o Cansanço do Êxtase, a Manifestação ser destruída.</li>
+          <li><strong>Não mate por surpresa.</strong> Combine antes a regra de Lesão Crítica e de morte.</li>
+          <li><strong>Não explore a fraqueza do jogador toda hora.</strong> Contra-atacar a identidade da classe ocasionalmente é drama; toda cena é perseguição.</li>
+          <li><strong>Teto de ±4.</strong> Bônus situacionais nunca passam disso; combine antes com a mesa.</li>
+        </ol>
+      </div>
+
+      <div class="gm-block">
+        <h3>Economia do turno (cola)</h3>
+        <div class="turno-economia">
+          <div class="slot"><b>Ação Principal</b><span>atacar, habilidade, manobra, item</span></div>
+          <div class="slot"><b>Movimento</b><span>deslocar-se, levantar, escapar</span></div>
+          <div class="slot"><b>Ação Bônus</b><span>trocar Postura, preparar, transformar</span></div>
+          <div class="slot"><b>Reação</b><span>esquivar, bloquear, disparo preparado</span></div>
+          <div class="slot"><b>Ações Livres</b><span>até 2: falar, soltar objeto, gesto</span></div>
+        </div>
+        <p>A <strong>Reação</strong> é o recurso mais disputado do jogo: Esquivar, Bloquear, Contra-atacar, Disparo Preparado (Atirador), Interposição/Escudo (Guardião), Interrupção (Ladino), Nota de Coragem (Bardo), Passo Vazio/Corpo Vazio (Monge), Interposição (Espírito/Xamã e Manifestação). Quando um jogador gastar a Reação cedo, o mundo pode (e deve) responder.</p>
+      </div>
+
+      <div class="gm-block">
+        <h3>Julgando habilidades improvisadas</h3>
+        <p>Quando o jogador descrever algo fora das tabelas: encontre o efeito mais próximo no Mercado de Habilidades, aplique os valores fixos, defina o custo pela tabela de Mana/Lanto/Cansanço. Se quebrar uma regra menor, exija uma Limitação narrativa real (não cosmética).</p>
+      </div>
+    </section>
+
+    <footer>
+      <div class="sigil-line">✦ ✦ ✦</div>
+      <p>Guia de Identidade de Combate — Faces do Abismo · Livro Básico</p>
+      <p>Material de referência para mesa. Consulte sempre o livro oficial para regras completas.</p>
+    </footer>
+  </main>
+</div>
+
+<script>
+function toggleCard(header){
+  header.parentElement.classList.toggle('open');
+}
+// Abre a primeira classe por padrão
+document.querySelector('.class-card').classList.add('open');
+// Fecha sidebar mobile ao clicar em link
+document.querySelectorAll('.nav a').forEach(function(a){
+  a.addEventListener('click', function(){
+    document.getElementById('sidebar').classList.remove('open');
+  });
+});
+</script>
+</body>
+</html>
